@@ -97,21 +97,25 @@ let musicStarted = false;
 function startMusic() {
   if (musicStarted) return;
 
+  audioCtx.resume(); // 🔴 REQUIRED on mobile
+
   music = new Audio("island.mp3");
   music.loop = true;
+  music.volume = 1.0; // 🔴 IMPORTANT
 
   musicSource = audioCtx.createMediaElementSource(music);
   musicGain = audioCtx.createGain();
 
-  // 🔉 REAL volume control (very quiet)
-  musicGain.gain.value = 0.001; // try 0.001, 0.0005, even 0.0002
+  // 🎚️ Start here
+  musicGain.gain.value = 0.05; // try 0.05, then go down
 
   musicSource.connect(musicGain);
   musicGain.connect(audioCtx.destination);
 
-  music.play().catch(() => {});
+  music.play().catch(err => console.log(err));
   musicStarted = true;
 }
+
 
 
 // =======================
