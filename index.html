@@ -90,16 +90,29 @@ function playPopSound() {
 // =======================
 
 let music;
+let musicSource;
+let musicGain;
 let musicStarted = false;
 
 function startMusic() {
   if (musicStarted) return;
+
   music = new Audio("island.mp3");
   music.loop = true;
-  music.volume = 0.002;
+
+  musicSource = audioCtx.createMediaElementSource(music);
+  musicGain = audioCtx.createGain();
+
+  // 🔉 REAL volume control (very quiet)
+  musicGain.gain.value = 0.001; // try 0.001, 0.0005, even 0.0002
+
+  musicSource.connect(musicGain);
+  musicGain.connect(audioCtx.destination);
+
   music.play().catch(() => {});
   musicStarted = true;
 }
+
 
 // =======================
 // GAME STATE
