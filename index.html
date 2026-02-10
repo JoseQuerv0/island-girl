@@ -96,7 +96,7 @@ function startMusic() {
   if (musicStarted) return;
   music = new Audio("island.mp3");
   music.loop = true;
-  music.volume = 0.005;
+  music.volume = 0.002;
   music.play().catch(() => {});
   musicStarted = true;
 }
